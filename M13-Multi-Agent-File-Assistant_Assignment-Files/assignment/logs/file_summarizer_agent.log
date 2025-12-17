@@ -1,0 +1,526 @@
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.SYSTEM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mmagenta[1m][0mEntity.SYSTEM[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m[1m([0mfile_summarizer_agent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mmagenta[1m][0mYou are a file summarization 
+specialist. Your task is:
+      • Read the file using [32m'read_file'[0m
+      • Summarize content with [1;36m2[0m-[1;36m3[0m sentence overview
+      • Provide key points as bullet points
+      • Use [32m'done_tool'[0m to return the final summary
+    
+
+=== GUIDELINES ON SOME TOOLS/FUNCTIONS USAGE ===
+            TOOL: done_tool:
+                        GUIDANCE: 
+        When you determine your task is finished, 
+        use the tool `done_tool` to signal this,
+        along with any message or result, in the `content` field. 
+
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+TOOL: read_file:
+                        GUIDANCE: 
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+
+
+=== ALL AVAILABLE TOOLS and THEIR FORMAT INSTRUCTIONS ===
+You have access to the following TOOLS to accomplish your task:
+
+TOOL: done_tool
+            PURPOSE: 
+    To signal the current task is done, along with an optional message [1m<[0m[1;95mcontent[0m[1m>[0m
+    of arbitrary type [1m([0mdefault [3;35mNone[0m[1m)[0m.
+
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"done_tool"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"content"[0m: [1m{[0m
+            [32m"default"[0m: [32m""[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"request"[0m
+    [1m][0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"done_tool"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+TOOL: read_file
+            PURPOSE: Read the contents of a file 
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"read_file"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"path"[0m: [1m{[0m
+            [32m"description"[0m: [32m"The FULL file path to read, relative to the current working directory"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"path"[0m,
+        [32m"request"[0m
+    [1m][0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"read_file"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+When one of the above TOOLs is applicable, you must express your 
+request as [32m"TOOL:"[0m followed by the request in the above format.[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.USER [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mfile_summarizer_agent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0mPlease summarize the file: 
+myfiles/beethoven.md[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.SYSTEM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mmagenta[1m][0mEntity.SYSTEM[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m[1m([0mfile_summarizer_agent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mmagenta[1m][0mYou are a file summarization 
+specialist. Your task is:
+      • Read the file using [32m'read_file'[0m
+      • Summarize content with [1;36m2[0m-[1;36m3[0m sentence overview
+      • Provide key points as bullet points
+      • Use [32m'done_tool'[0m to return the final summary
+    
+
+=== GUIDELINES ON SOME TOOLS/FUNCTIONS USAGE ===
+            TOOL: done_tool:
+                        GUIDANCE: 
+        When you determine your task is finished, 
+        use the tool `done_tool` to signal this,
+        along with any message or result, in the `content` field. 
+
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+TOOL: read_file:
+                        GUIDANCE: 
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+
+
+=== ALL AVAILABLE TOOLS and THEIR FORMAT INSTRUCTIONS ===
+You have access to the following TOOLS to accomplish your task:
+
+TOOL: done_tool
+            PURPOSE: 
+    To signal the current task is done, along with an optional message [1m<[0m[1;95mcontent[0m[1m>[0m
+    of arbitrary type [1m([0mdefault [3;35mNone[0m[1m)[0m.
+
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"done_tool"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"content"[0m: [1m{[0m
+            [32m"default"[0m: [32m""[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"request"[0m
+    [1m][0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"done_tool"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+TOOL: read_file
+            PURPOSE: Read the contents of a file 
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"read_file"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"path"[0m: [1m{[0m
+            [32m"description"[0m: [32m"The FULL file path to read, relative to the current working directory"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"path"[0m,
+        [32m"request"[0m
+    [1m][0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"read_file"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+When one of the above TOOLs is applicable, you must express your 
+request as [32m"TOOL:"[0m followed by the request in the above format.[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.USER [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mfile_summarizer_agent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0mPlease summarize the file: 
+myfiles/beethoven.md[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.SYSTEM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mmagenta[1m][0mEntity.SYSTEM[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m[1m([0mfile_summarizer_agent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mmagenta[1m][0mYou are a file summarization 
+specialist. Your task is:
+      • Read the file using [32m'read_file'[0m
+      • Summarize content with [1;36m2[0m-[1;36m3[0m sentence overview
+      • Provide key points as bullet points
+      • Use [32m'done_tool'[0m to return the final summary
+    
+
+=== GUIDELINES ON SOME TOOLS/FUNCTIONS USAGE ===
+            TOOL: done_tool:
+                        GUIDANCE: 
+        When you determine your task is finished, 
+        use the tool `done_tool` to signal this,
+        along with any message or result, in the `content` field. 
+
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+TOOL: read_file:
+                        GUIDANCE: 
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+
+
+=== ALL AVAILABLE TOOLS and THEIR FORMAT INSTRUCTIONS ===
+You have access to the following TOOLS to accomplish your task:
+
+TOOL: done_tool
+            PURPOSE: 
+    To signal the current task is done, along with an optional message [1m<[0m[1;95mcontent[0m[1m>[0m
+    of arbitrary type [1m([0mdefault [3;35mNone[0m[1m)[0m.
+
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"done_tool"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"content"[0m: [1m{[0m
+            [32m"default"[0m: [32m""[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"request"[0m
+    [1m][0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"done_tool"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+TOOL: read_file
+            PURPOSE: Read the contents of a file 
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"read_file"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"path"[0m: [1m{[0m
+            [32m"description"[0m: [32m"The FULL file path to read, relative to the current working directory"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"path"[0m,
+        [32m"request"[0m
+    [1m][0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"read_file"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+When one of the above TOOLs is applicable, you must express your 
+request as [32m"TOOL:"[0m followed by the request in the above format.[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.USER [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mfile_summarizer_agent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0mPlease summarize the file: 
+myfiles/beethoven.md[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.SYSTEM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mmagenta[1m][0mEntity.SYSTEM[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m[1m([0mfile_summarizer_agent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mmagenta[1m][0mYou are a file summarization 
+specialist. Your task is:
+      • Read the file using [32m'read_file'[0m
+      • Summarize content with [1;36m2[0m-[1;36m3[0m sentence overview
+      • Provide key points as bullet points
+      • Use [32m'done_tool'[0m to return the final summary
+    
+
+=== GUIDELINES ON SOME TOOLS/FUNCTIONS USAGE ===
+            TOOL: done_tool:
+                        GUIDANCE: 
+        When you determine your task is finished, 
+        use the tool `done_tool` to signal this,
+        along with any message or result, in the `content` field. 
+
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+TOOL: read_file:
+                        GUIDANCE: 
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+
+
+=== ALL AVAILABLE TOOLS and THEIR FORMAT INSTRUCTIONS ===
+You have access to the following TOOLS to accomplish your task:
+
+TOOL: done_tool
+            PURPOSE: 
+    To signal the current task is done, along with an optional message [1m<[0m[1;95mcontent[0m[1m>[0m
+    of arbitrary type [1m([0mdefault [3;35mNone[0m[1m)[0m.
+
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"done_tool"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"content"[0m: [1m{[0m
+            [32m"default"[0m: [32m""[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"request"[0m
+    [1m][0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"done_tool"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+TOOL: read_file
+            PURPOSE: Read the contents of a file 
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"read_file"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"path"[0m: [1m{[0m
+            [32m"description"[0m: [32m"The FULL file path to read, relative to the current working directory"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"path"[0m,
+        [32m"request"[0m
+    [1m][0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"read_file"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+When one of the above TOOLs is applicable, you must express your 
+request as [32m"TOOL:"[0m followed by the request in the above format.[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.USER [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mfile_summarizer_agent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0mPlease summarize the file: 
+myfiles/beethoven.md[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.SYSTEM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mmagenta[1m][0mEntity.SYSTEM[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m[1m([0mfile_summarizer_agent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mmagenta[1m][0mYou are a file summarization 
+specialist. Your task is:
+      • Read the file using [32m'read_file'[0m
+      • Summarize content with [1;36m2[0m-[1;36m3[0m sentence overview
+      • Provide key points as bullet points
+      • Use [32m'done_tool'[0m to return the final summary
+    
+
+=== GUIDELINES ON SOME TOOLS/FUNCTIONS USAGE ===
+            TOOL: done_tool:
+                        GUIDANCE: 
+        When you determine your task is finished, 
+        use the tool `done_tool` to signal this,
+        along with any message or result, in the `content` field. 
+
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+TOOL: read_file:
+                        GUIDANCE: 
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+
+
+=== ALL AVAILABLE TOOLS and THEIR FORMAT INSTRUCTIONS ===
+You have access to the following TOOLS to accomplish your task:
+
+TOOL: done_tool
+            PURPOSE: 
+    To signal the current task is done, along with an optional message [1m<[0m[1;95mcontent[0m[1m>[0m
+    of arbitrary type [1m([0mdefault [3;35mNone[0m[1m)[0m.
+
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"done_tool"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"content"[0m: [1m{[0m
+            [32m"default"[0m: [32m""[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"request"[0m
+    [1m][0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"done_tool"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+TOOL: read_file
+            PURPOSE: Read the contents of a file 
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"read_file"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"path"[0m: [1m{[0m
+            [32m"description"[0m: [32m"The FULL file path to read, relative to the current working directory"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"path"[0m,
+        [32m"request"[0m
+    [1m][0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"read_file"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+When one of the above TOOLs is applicable, you must express your 
+request as [32m"TOOL:"[0m followed by the request in the above format.[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.USER [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mfile_summarizer_agent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0mPlease summarize the file: 
+myfiles/beethoven.md[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.LLM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mgreen[1m][0mEntity.LLM[1m[[0m[35m/[0m[95mgreen[0m[1m][0m[1m([0m          [1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m   [1;35mTOOL[0m[1m([0m read_file[1m)[0m [1m[[0mgreen[1m][0mTOOL:
+[1m{[0m[32m"request"[0m: [32m"read_file"[0m, [32m"path"[0m: [32m"myfiles/beethoven.md"[0m[1m}[0m[1m[[0m[35m/[0m[95mgreen[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mfile_summarizer_agent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m# Ludwig van Beethoven
+
+Ludwig van Beethoven [1m([0m[1;36m1770[0m-[1;36m1827[0m[1m)[0m stands as one of the most influential composers in the history of Western classical music, whose revolutionary works bridged the Classical and Romantic periods. 
+Despite beginning to lose his hearing in his late twenties and becoming almost completely deaf by his forties, Beethoven composed some of the most celebrated symphonies in musical history, including 
+the triumphant Symphony No. [1;36m3[0m [32m"Eroica,"[0m the fate-knocking Symphony No. [1;36m5[0m with its iconic four-note motif, the pastoral Symphony No. [1;36m6[0m, and the monumental Symphony No. [1;36m9[0m [32m"Choral"[0m featuring the [32m"Ode to [0m
+[32mJoy."[0m His profound deafness, which he described as his greatest torment, paradoxically drove him to compose with even greater intensity and innovation, pushing the boundaries of musical form and 
+emotional expression. Beethoven's impact on classical music cannot be overstatedâ€”he expanded the scope and ambition of the symphony, elevated the status of instrumental music to equal that of vocal 
+music, and paved the way for the Romantic era by emphasizing personal expression and breaking free from classical constraints, forever changing how composers approached their craft and how audiences 
+experienced music.[1m[[0m[35m/[0m[95mred[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mfile_summarizer_agent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mEntity.AGENT[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mfile_summarizer_agent[1m)[0m [1m[[0mwhite[1m][0m Entity.LLM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mgreen[1m][0mEntity.LLM[1m[[0m[35m/[0m[95mgreen[0m[1m][0m[1m([0m          [1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m   [1;35mTOOL[0m[1m([0m done_tool[1m)[0m [1m[[0mgreen[1m][0mLudwig van Beethoven [1m([0m[1;36m1770[0m-[1;36m1827[0m[1m)[0m was an immensely 
+influential composer who bridged the Classical and Romantic periods of Western classical music. Despite becoming almost completely deaf by his forties, he composed some of the most celebrated 
+symphonies, including the [32m"Eroica,"[0m [32m"Fate,"[0m [32m"Pastoral,"[0m and the monumental [32m"Choral"[0m Symphony featuring the [32m"Ode to Joy."[0m His profound deafness paradoxically fueled his innovative spirit, leading him 
+to expand the scope of the symphony, elevate instrumental music, and emphasize personal expression, thereby fundamentally changing classical music and paving the way for the Romantic era.
+
+Key Points:
+*   Beethoven was a highly influential composer who lived from [1;36m1770[0m to [1;36m1827[0m.
+*   He is known for bridging the Classical and Romantic periods in Western classical music.
+*   He began losing his hearing in his late twenties and was almost completely deaf by his forties.
+*   Despite his deafness, he composed iconic works such as Symphony No. [1;36m3[0m [32m"Eroica,"[0m Symphony No. [1;36m5[0m, Symphony No. [1;36m6[0m [32m"Pastoral,"[0m and Symphony No. [1;36m9[0m [32m"Choral"[0m [1m([0mfeaturing [32m"Ode to Joy"[0m[1m)[0m.
+*   His deafness is noted as a driving force behind his intense and innovative compositions.
+*   Beethoven significantly expanded the scope and ambition of the symphony and elevated the status of instrumental music.
+*   He emphasized personal expression and broke classical constraints, profoundly influencing future composers and the Romantic era.
+
+TOOL:
+[1m{[0m[32m"request"[0m: [32m"done_tool"[0m, [32m"content"[0m: [32m"Ludwig van Beethoven [0m[32m([0m[32m1770-1827[0m[32m)[0m[32m was an immensely influential composer who bridged the Classical and Romantic periods of Western classical music. Despite becoming [0m
+[32malmost completely deaf by his forties, he composed some of the most celebrated symphonies, including the \"Eroica,\" \"Fate,\" \"Pastoral,\" and the monumental \"Choral\" Symphony featuring the \"Ode [0m
+[32mto Joy.\" His profound deafness paradoxically fueled his innovative spirit, leading him to expand the scope of the symphony, elevate instrumental music, and emphasize personal expression, thereby [0m
+[32mfundamentally changing classical music and paving the way for the Romantic era.\n\nKey Points:\n*   Beethoven was a highly influential composer who lived from 1770 to 1827.\n*   He is known for [0m
+[32mbridging the Classical and Romantic periods in Western classical music.\n*   He began losing his hearing in his late twenties and was almost completely deaf by his forties.\n*   Despite his deafness, [0m
+[32mhe composed iconic works such as Symphony No. 3 \"Eroica,\" Symphony No. 5, Symphony No. 6 \"Pastoral,\" and Symphony No. 9 \"Choral\" [0m[32m([0m[32mfeaturing \"Ode to Joy\"[0m[32m)[0m[32m.\n*   His deafness is noted as a [0m
+[32mdriving force behind his intense and innovative compositions.\n*   Beethoven significantly expanded the scope and ambition of the symphony and elevated the status of instrumental music.\n*   He [0m
+[32memphasized personal expression and broke classical constraints, profoundly influencing future composers and the Romantic era."[0m[1m}[0m[1m[[0m[35m/[0m[95mgreen[0m[1m][0m

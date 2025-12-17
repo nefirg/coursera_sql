@@ -1,0 +1,39 @@
+ 	Task	Responder	sender_entity	sender_name	recipient	block	tool_type	tool	content
+*	FileSearchAgent	Entity.SYSTEM	Entity.SYSTEM	FileSearchAgent		None			You are a file search specialist. Your job is to search for files that match a g...ust express your request as "TOOL:" followed by the request in the above format.
+*	FileSearchAgent	Entity.USER	Entity.USER	FileSearchAgent		None			Search in directory: myfiles Query: finance
+ 	FileSearchAgent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+ 	FileSearchAgent	Entity.AGENT	Entity.USER			None			
+*	FileSearchAgent	Entity.LLM	Entity.LLM			None	TOOL	list_dir	TOOL: {"request": "list_dir", "path": "myfiles"}
+*	FileSearchAgent	Entity.AGENT	Entity.AGENT	FileSearchAgent		None			beethoven.md beyonce.md bill_evans.md budgeting_tips.md debt_management.md investment_basics.md
+ 	FileSearchAgent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+ 	FileSearchAgent	Entity.AGENT	Entity.AGENT	Entity.AGENT		None			[CANNOT RESPOND]
+*	FileSearchAgent	Entity.LLM	Entity.LLM			None	TOOL	read_file	TOOL: {"request": "read_file", "path": "myfiles/beethoven.md"}
+*	FileSearchAgent	Entity.AGENT	Entity.AGENT	FileSearchAgent		None			# Ludwig van Beethoven Ludwig van Beethoven (1770-1827) stands as one of the mos...anging how composers approached their craft and how audiences experienced music.
+ 	FileSearchAgent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+ 	FileSearchAgent	Entity.AGENT	Entity.AGENT	Entity.AGENT		None			[CANNOT RESPOND]
+*	FileSearchAgent	Entity.LLM	Entity.LLM			None	TOOL	read_file	TOOL: {"request": "read_file", "path": "myfiles/beyonce.md"}
+*	FileSearchAgent	Entity.AGENT	Entity.AGENT	FileSearchAgent		None			# BeyoncÃ© BeyoncÃ© Giselle Knowles-Carter, known mononymously as BeyoncÃ©, stan... generation of artists to embrace their artistic autonomy and cultural heritage.
+ 	FileSearchAgent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+ 	FileSearchAgent	Entity.AGENT	Entity.AGENT	Entity.AGENT		None			[CANNOT RESPOND]
+*	FileSearchAgent	Entity.LLM	Entity.LLM			None	TOOL	read_file	TOOL: {"request": "read_file", "path": "myfiles/bill_evans.md"}
+*	FileSearchAgent	Entity.AGENT	Entity.AGENT	FileSearchAgent		None			# Bill Evans Bill Evans (1929-1980) was a revolutionary jazz pianist whose intro...ers worldwide, from Keith Jarrett and Herbie Hancock to Brad Mehldau and beyond.
+ 	FileSearchAgent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+ 	FileSearchAgent	Entity.AGENT	Entity.AGENT	Entity.AGENT		None			[CANNOT RESPOND]
+*	FileSearchAgent	Entity.LLM	Entity.LLM			None	TOOL	read_file	TOOL: {"request": "read_file", "path": "myfiles/budgeting_tips.md"}
+*	FileSearchAgent	Entity.AGENT	Entity.AGENT	FileSearchAgent		None			# Smart Budgeting Techniques Creating and maintaining a budget is the cornerston...ly, treating it as a living document that evolves with your financial situation.
+ 	FileSearchAgent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+ 	FileSearchAgent	Entity.AGENT	Entity.AGENT	Entity.AGENT		None			[CANNOT RESPOND]
+*	FileSearchAgent	Entity.LLM	Entity.LLM			None	TOOL	read_file	TOOL: {"request": "read_file", "path": "myfiles/debt_management.md"}
+*	FileSearchAgent	Entity.AGENT	Entity.AGENT	FileSearchAgent		None			# Effective Debt Management Managing debt strategically can significantly improv...es and student loans can be investments in your future when managed responsibly.
+ 	FileSearchAgent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+ 	FileSearchAgent	Entity.AGENT	Entity.AGENT	Entity.AGENT		None			[CANNOT RESPOND]
+*	FileSearchAgent	Entity.LLM	Entity.LLM			None	TOOL	read_file	TOOL: {"request": "read_file", "path": "myfiles/investment_basics.md"}
+*	FileSearchAgent	Entity.AGENT	Entity.AGENT	FileSearchAgent		None			# Investment Fundamentals Understanding investment basics is crucial for buildin...ency fund before investing. Remember that investing is a marathon, not a sprint.
+ 	FileSearchAgent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+ 	FileSearchAgent	Entity.AGENT	Entity.AGENT	Entity.AGENT		None			[CANNOT RESPOND]
+*	FileSearchAgent	Entity.LLM	Entity.LLM			None			budgeting_tips.md: This file contains "Smart Budgeting Techniques" which are dir...g concepts like risk vs. reward, diversification, and building long-term wealth.
+ 	FileSearchAgent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+*	FileSearchAgent	Entity.AGENT	Entity.AGENT	FileSearchAgent		None			You FORGOT to use one of your TOOLs! Remember that: - You must use a combination...ead_file to search for files; - You should use done_tool to return your results;
+ 	FileSearchAgent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+ 	FileSearchAgent	Entity.AGENT	Entity.AGENT	Entity.AGENT		None			[CANNOT RESPOND]
+*	FileSearchAgent	Entity.LLM	Entity.LLM			None	TOOL	done_tool	TOOL: {"request": "done_tool", "content": "budgeting_tips.md: This file contains...concepts like risk vs. reward, diversification, and building long-term wealth."}

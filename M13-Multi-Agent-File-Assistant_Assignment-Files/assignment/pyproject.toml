@@ -1,0 +1,13 @@
+[project]
+name = "multi_agent"
+version = "0.1.0"
+dependencies = [
+    "langroid>=0.30.0",
+    "pytest>=8.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["."]
+python_files = "test*.py"
+python_classes = "Test*"
+python_functions = "test_*"

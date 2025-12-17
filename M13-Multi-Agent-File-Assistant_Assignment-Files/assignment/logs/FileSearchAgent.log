@@ -1,0 +1,245 @@
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.SYSTEM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mmagenta[1m][0mEntity.SYSTEM[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m[1m([0mFileSearchAgent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mmagenta[1m][0mYou are a file search specialist. Your job
+is to search for files
+    that match a given query by examining their contents.
+    
+    When given a directory and search query, follow these steps:
+    [1;36m1[0m. Use list_dir to list all files in the directory
+    [1;36m2[0m. For each file found, use read_file to read its contents
+    [1;36m3[0m. Check if the file content is relevant to the search query
+    [1;36m4[0m. Keep track of all files that match the query
+    
+    A file matches if:
+    - It contains keywords from the query
+    - Its content is related to the query topic
+    - It has information relevant to what the user is looking for
+    
+    Be thorough in your search and check all files in the directory.
+    
+    When you find matching files, use `done_tool` to return your results.
+    In the `content` field, provide:
+    - The names of files that match the query
+    - A brief explanation of WHY each file matches [1m([0mwhat relevant content it contains[1m)[0m
+    - Format your response clearly with each file on its own line
+    
+    IMPORTANT: If no files match, use `done_tool` with content = EMPTY string!
+    
+
+=== GUIDELINES ON SOME TOOLS/FUNCTIONS USAGE ===
+            TOOL: done_tool:
+                        GUIDANCE: 
+        When you determine your task is finished, 
+        use the tool `done_tool` to signal this,
+        along with any message or result, in the `content` field. 
+
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+TOOL: list_dir:
+                        GUIDANCE: 
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+TOOL: read_file:
+                        GUIDANCE: 
+        IMPORTANT: When using this or any other tool/function, you MUST include a 
+        `request` field and set it equal to the FUNCTION/TOOL NAME you intend to use.
+
+
+
+
+
+
+=== ALL AVAILABLE TOOLS and THEIR FORMAT INSTRUCTIONS ===
+You have access to the following TOOLS to accomplish your task:
+
+TOOL: done_tool
+            PURPOSE: 
+    To signal the current task is done, along with an optional message [1m<[0m[1;95mcontent[0m[1m>[0m
+    of arbitrary type [1m([0mdefault [3;35mNone[0m[1m)[0m.
+
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"done_tool"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"content"[0m: [1m{[0m
+            [32m"default"[0m: [32m""[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"request"[0m
+    [1m][0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"done_tool"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+TOOL: list_dir
+            PURPOSE: List files and directories in a given path 
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"list_dir"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"path"[0m: [1m{[0m
+            [32m"description"[0m: [32m"The directory path to list contents from"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"path"[0m,
+        [32m"request"[0m
+    [1m][0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"list_dir"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+TOOL: read_file
+            PURPOSE: Read the contents of a file 
+            JSON FORMAT: [1m{[0m
+    [32m"properties"[0m: [1m{[0m
+        [32m"request"[0m: [1m{[0m
+            [32m"default"[0m: [32m"read_file"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m,
+        [32m"path"[0m: [1m{[0m
+            [32m"description"[0m: [32m"The FULL file path to read, relative to the current working directory"[0m,
+            [32m"type"[0m: [32m"string"[0m
+        [1m}[0m
+    [1m}[0m,
+    [32m"required"[0m: [1m[[0m
+        [32m"path"[0m,
+        [32m"request"[0m
+    [1m][0m,
+    [32m"type"[0m: [32m"object"[0m,
+    [32m"request"[0m: [1m{[0m
+        [32m"enum"[0m: [1m[[0m
+            [32m"read_file"[0m
+        [1m][0m,
+        [32m"type"[0m: [32m"string"[0m
+    [1m}[0m
+[1m}[0m
+
+
+
+When one of the above TOOLs is applicable, you must express your 
+request as [32m"TOOL:"[0m followed by the request in the above format.[1m[[0m[35m/[0m[95mmagenta[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.USER [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mFileSearchAgent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0mSearch in directory: myfiles
+Query: finance[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.LLM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mgreen[1m][0mEntity.LLM[1m[[0m[35m/[0m[95mgreen[0m[1m][0m[1m([0m          [1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m   [1;35mTOOL[0m[1m([0m  list_dir[1m)[0m [1m[[0mgreen[1m][0mTOOL: [1m{[0m[32m"request"[0m: [32m"list_dir"[0m, [32m"path"[0m: [32m"myfiles"[0m[1m}[0m[1m[[0m[35m/[0m[95mgreen[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mFileSearchAgent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0mbeethoven.md
+beyonce.md
+bill_evans.md
+budgeting_tips.md
+debt_management.md
+investment_basics.md[1m[[0m[35m/[0m[95mred[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mEntity.AGENT[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.LLM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mgreen[1m][0mEntity.LLM[1m[[0m[35m/[0m[95mgreen[0m[1m][0m[1m([0m          [1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m   [1;35mTOOL[0m[1m([0m read_file[1m)[0m [1m[[0mgreen[1m][0mTOOL: [1m{[0m[32m"request"[0m: [32m"read_file"[0m, [32m"path"[0m: 
+[32m"myfiles/beethoven.md"[0m[1m}[0m[1m[[0m[35m/[0m[95mgreen[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mFileSearchAgent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m# Ludwig van Beethoven
+
+Ludwig van Beethoven [1m([0m[1;36m1770[0m-[1;36m1827[0m[1m)[0m stands as one of the most influential composers in the history of Western classical music, whose revolutionary works bridged the Classical and Romantic periods. 
+Despite beginning to lose his hearing in his late twenties and becoming almost completely deaf by his forties, Beethoven composed some of the most celebrated symphonies in musical history, including 
+the triumphant Symphony No. [1;36m3[0m [32m"Eroica,"[0m the fate-knocking Symphony No. [1;36m5[0m with its iconic four-note motif, the pastoral Symphony No. [1;36m6[0m, and the monumental Symphony No. [1;36m9[0m [32m"Choral"[0m featuring the [32m"Ode to [0m
+[32mJoy."[0m His profound deafness, which he described as his greatest torment, paradoxically drove him to compose with even greater intensity and innovation, pushing the boundaries of musical form and 
+emotional expression. Beethoven's impact on classical music cannot be overstatedâ€”he expanded the scope and ambition of the symphony, elevated the status of instrumental music to equal that of vocal 
+music, and paved the way for the Romantic era by emphasizing personal expression and breaking free from classical constraints, forever changing how composers approached their craft and how audiences 
+experienced music.[1m[[0m[35m/[0m[95mred[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mEntity.AGENT[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.LLM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mgreen[1m][0mEntity.LLM[1m[[0m[35m/[0m[95mgreen[0m[1m][0m[1m([0m          [1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m   [1;35mTOOL[0m[1m([0m read_file[1m)[0m [1m[[0mgreen[1m][0mTOOL: [1m{[0m[32m"request"[0m: [32m"read_file"[0m, [32m"path"[0m: 
+[32m"myfiles/beyonce.md"[0m[1m}[0m[1m[[0m[35m/[0m[95mgreen[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mFileSearchAgent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m# BeyoncÃ©
+
+BeyoncÃ© Giselle Knowles-Carter, known mononymously as BeyoncÃ©, stands as one of the most influential artists of the 21st century. Since launching her solo career in [1;36m2003[0m following her success with 
+Destiny's Child, she has amassed an unprecedented [1;36m32[0m Grammy Awards, making her the most decorated artist in Grammy history. Her musical evolution has been nothing short of revolutionary, transitioning
+from R&B pop anthems like [32m"Crazy in Love"[0m to groundbreaking visual albums such as [32m"Lemonade"[0m [1m([0m[1;36m2016[0m[1m)[0m and [32m"Renaissance"[0m [1m([0m[1;36m2022[0m[1m)[0m, which explored themes of Black womanhood, infidelity, and healing while 
+pushing sonic boundaries through house, disco, and Afrobeats. Beyond her musical achievements, BeyoncÃ© has redefined the role of the modern pop star as a cultural architect, using her platform to 
+champion Black culture, feminism, and social justice through powerful performances like her [1;36m2018[0m Coachella set [1m([0mdubbed [32m"Beychella"[0m[1m)[0m and her politically charged Super Bowl halftime show in [1;36m2016[0m. Her 
+impact extends far beyond entertainment, influencing fashion, business models in the music industry through surprise album releases, and inspiring a generation of artists to embrace their artistic 
+autonomy and cultural heritage.[1m[[0m[35m/[0m[95mred[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mEntity.AGENT[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.LLM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mgreen[1m][0mEntity.LLM[1m[[0m[35m/[0m[95mgreen[0m[1m][0m[1m([0m          [1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m   [1;35mTOOL[0m[1m([0m read_file[1m)[0m [1m[[0mgreen[1m][0mTOOL: [1m{[0m[32m"request"[0m: [32m"read_file"[0m, [32m"path"[0m: 
+[32m"myfiles/bill_evans.md"[0m[1m}[0m[1m[[0m[35m/[0m[95mgreen[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mFileSearchAgent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m# Bill Evans
+
+Bill Evans [1m([0m[1;36m1929[0m-[1;36m1980[0m[1m)[0m was a revolutionary jazz pianist whose introspective approach and harmonic sophistication fundamentally transformed the landscape of modern jazz piano. Best known for his 
+groundbreaking work with his trioâ€”particularly the legendary collaboration with bassist Scott LaFaro and drummer Paul Motianâ€”Evans pioneered a conversational, democratic approach to trio playing 
+where all three instruments engaged as equal partners rather than the traditional piano-with-accompaniment format. His harmonic innovations included the extensive use of modal jazz concepts, rootless 
+voicings, and impressionistic chord clusters that drew from classical composers like Debussy and Ravel, creating a uniquely lyrical and emotionally profound sound. Evans' influence on subsequent 
+generations of jazz pianists cannot be overstated; his emphasis on touch, tone, and the creative use of space, combined with his sophisticated reharmonizations and introspective interpretations of 
+standards, established a new paradigm for jazz piano that continues to inspire players worldwide, from Keith Jarrett and Herbie Hancock to Brad Mehldau and beyond.[1m[[0m[35m/[0m[95mred[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mEntity.AGENT[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.LLM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mgreen[1m][0mEntity.LLM[1m[[0m[35m/[0m[95mgreen[0m[1m][0m[1m([0m          [1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m   [1;35mTOOL[0m[1m([0m read_file[1m)[0m [1m[[0mgreen[1m][0mTOOL: [1m{[0m[32m"request"[0m: [32m"read_file"[0m, [32m"path"[0m: 
+[32m"myfiles/budgeting_tips.md"[0m[1m}[0m[1m[[0m[35m/[0m[95mgreen[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mFileSearchAgent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m# Smart Budgeting Techniques
+
+Creating and maintaining a budget is the cornerstone of financial health. The [1;36m50[0m/[1;36m30[0m/[1;36m20[0m rule provides a simple framework: allocate [1;36m50[0m% of after-tax income to needs, [1;36m30[0m% to wants, and [1;36m20[0m% to savings and
+debt repayment. Track every expense for at least one month to understand your spending patterns. Use budgeting apps or spreadsheets to categorize expenses and identify areas for potential savings. 
+Automate bill payments and savings transfers to ensure consistency. Review and adjust your budget monthly, treating it as a living document that evolves with your financial situation.[1m[[0m[35m/[0m[95mred[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mEntity.AGENT[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.LLM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mgreen[1m][0mEntity.LLM[1m[[0m[35m/[0m[95mgreen[0m[1m][0m[1m([0m          [1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m   [1;35mTOOL[0m[1m([0m read_file[1m)[0m [1m[[0mgreen[1m][0mTOOL: [1m{[0m[32m"request"[0m: [32m"read_file"[0m, [32m"path"[0m: 
+[32m"myfiles/debt_management.md"[0m[1m}[0m[1m[[0m[35m/[0m[95mgreen[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mFileSearchAgent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m# Effective Debt Management
+
+Managing debt strategically can significantly improve your financial position. Prioritize high-interest debt using either the avalanche method [1m([0mhighest interest first[1m)[0m or snowball method [1m([0msmallest 
+balance first[1m)[0m based on your motivation style. Consider debt consolidation if it lowers your overall interest rate. Always pay more than the minimum on credit cards to avoid excessive interest 
+charges. Build an emergency fund even while paying off debt to prevent taking on new debt during unexpected situations. Remember that not all debt is bad - mortgages and student loans can be 
+investments in your future when managed responsibly.[1m[[0m[35m/[0m[95mred[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mEntity.AGENT[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.LLM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mgreen[1m][0mEntity.LLM[1m[[0m[35m/[0m[95mgreen[0m[1m][0m[1m([0m          [1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m   [1;35mTOOL[0m[1m([0m read_file[1m)[0m [1m[[0mgreen[1m][0mTOOL: [1m{[0m[32m"request"[0m: [32m"read_file"[0m, [32m"path"[0m: 
+[32m"myfiles/investment_basics.md"[0m[1m}[0m[1m[[0m[35m/[0m[95mgreen[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mFileSearchAgent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m# Investment Fundamentals
+
+Understanding investment basics is crucial for building long-term wealth. Begin with the fundamental principle of risk versus reward - higher potential returns typically come with increased risk. 
+Diversification across asset classes like stocks, bonds, and real estate helps minimize portfolio volatility. Dollar-cost averaging, where you invest fixed amounts regularly regardless of market 
+conditions, can reduce the impact of market timing. Always research investments thoroughly, understand fees and expenses, and maintain an emergency fund before investing. Remember that investing is a 
+marathon, not a sprint.[1m[[0m[35m/[0m[95mred[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mEntity.AGENT[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.LLM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mgreen[1m][0mEntity.LLM[1m[[0m[35m/[0m[95mgreen[0m[1m][0m[1m([0m          [1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mgreen[1m][0mbudgeting_tips.md: This file contains [32m"Smart Budgeting [0m
+[32mTechniques"[0m which are directly related to personal finance, including managing income, expenses, and savings.
+debt_management.md: This file discusses [32m"Effective Debt Management"[0m strategies, which is a core aspect of personal finance, covering topics like prioritizing debt, consolidation, and emergency funds.
+investment_basics.md: This file covers [32m"Investment Fundamentals,"[0m which is a key area of finance, explaining concepts like risk vs. reward, diversification, and building long-term wealth.[1m[[0m[35m/[0m[95mgreen[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mFileSearchAgent[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m
+    You FORGOT to use one of your TOOLs! Remember that:
+    - You must use a combination of list_dir and read_file 
+        to search for files;
+    - You should use done_tool to return your results;
+    [1m[[0m[35m/[0m[95mred[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.USER [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mblue[1m][0mEntity.USER[1m[[0m[35m/[0m[95mblue[0m[1m][0m[1m([0mEntity.USER[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mblue[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mblue[0m[1m][0m
+ [1m([0mFileSearchAgent[1m)[0m [1m[[0mred[1m][0m Entity.AGENT [1m[[0m[35m/[0m[95mred[0m[1m][0m [1m[[0mred[1m][0mEntity.AGENT[1m[[0m[35m/[0m[95mred[0m[1m][0m[1m([0mEntity.AGENT[1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m       [1m([0m          [1m)[0m [1m[[0mred[1m][0m[1m[[0mCANNOT RESPOND[1m][0m[1m[[0m[35m/[0m[95mred[0m[1m][0m
+*[1m([0mFileSearchAgent[1m)[0m [1m[[0mwhite[1m][0m Entity.LLM [1m[[0m[35m/[0m[95mwhite[0m[1m][0m [1m[[0mgreen[1m][0mEntity.LLM[1m[[0m[35m/[0m[95mgreen[0m[1m][0m[1m([0m          [1m)[0m [1m([0m=>          [1m)[0m [1m([0mX           [1m)[0m   [1;35mTOOL[0m[1m([0m done_tool[1m)[0m [1m[[0mgreen[1m][0mTOOL: [1m{[0m[32m"request"[0m: [32m"done_tool"[0m, [32m"content"[0m: 
+[32m"budgeting_tips.md: This file contains \"Smart Budgeting Techniques\" which are directly related to personal finance, including managing income, expenses, and savings.\ndebt_management.md: This file [0m
+[32mdiscusses \"Effective Debt Management\" strategies, which is a core aspect of personal finance, covering topics like prioritizing debt, consolidation, and emergency funds.\ninvestment_basics.md: This [0m
+[32mfile covers \"Investment Fundamentals,\" which is a key area of finance, explaining concepts like risk vs. reward, diversification, and building long-term wealth."[0m[1m}[0m[1m[[0m[35m/[0m[95mgreen[0m[1m][0m

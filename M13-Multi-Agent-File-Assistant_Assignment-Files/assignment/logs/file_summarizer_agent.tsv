@@ -1,0 +1,10 @@
+ 	Task	Responder	sender_entity	sender_name	recipient	block	tool_type	tool	content
+*	file_summarizer_agent	Entity.SYSTEM	Entity.SYSTEM	file_summarizer_agent		None			You are a file summarization specialist. Your task is: • Read the file using 're...ust express your request as "TOOL:" followed by the request in the above format.
+*	file_summarizer_agent	Entity.USER	Entity.USER	file_summarizer_agent		None			Please summarize the file: myfiles/beethoven.md
+ 	file_summarizer_agent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+ 	file_summarizer_agent	Entity.AGENT	Entity.USER			None			
+*	file_summarizer_agent	Entity.LLM	Entity.LLM			None	TOOL	read_file	TOOL: {"request": "read_file", "path": "myfiles/beethoven.md"}
+*	file_summarizer_agent	Entity.AGENT	Entity.AGENT	file_summarizer_agent		None			# Ludwig van Beethoven Ludwig van Beethoven (1770-1827) stands as one of the mos...anging how composers approached their craft and how audiences experienced music.
+ 	file_summarizer_agent	Entity.USER	Entity.USER	Entity.USER		None			[CANNOT RESPOND]
+ 	file_summarizer_agent	Entity.AGENT	Entity.AGENT	Entity.AGENT		None			[CANNOT RESPOND]
+*	file_summarizer_agent	Entity.LLM	Entity.LLM			None	TOOL	done_tool	Ludwig van Beethoven (1770-1827) was an immensely influential composer who bridg...cal constraints, profoundly influencing future composers and the Romantic era."}

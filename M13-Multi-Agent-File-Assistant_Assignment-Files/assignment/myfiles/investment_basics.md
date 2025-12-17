@@ -1,0 +1,3 @@
+# Investment Fundamentals
+
+Understanding investment basics is crucial for building long-term wealth. Begin with the fundamental principle of risk versus reward - higher potential returns typically come with increased risk. Diversification across asset classes like stocks, bonds, and real estate helps minimize portfolio volatility. Dollar-cost averaging, where you invest fixed amounts regularly regardless of market conditions, can reduce the impact of market timing. Always research investments thoroughly, understand fees and expenses, and maintain an emergency fund before investing. Remember that investing is a marathon, not a sprint.
